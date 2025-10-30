@@ -45,7 +45,7 @@ class NumberGuessingGameGUI:
 
         self.title_label = tk.Label(
             root,
-            text="🎯 Number Guessing Game 2 🎯",
+            text="🎯 Number Guessing Game 🎯",
             font=("Arial", 18, "bold"),
             bg="#f5f5f5",
             fg="#007acc"
@@ -113,6 +113,9 @@ class NumberGuessingGameGUI:
         if self.high_score:
             return f"🏆 Current High Score: {self.high_score} guesses"
         return "No high score yet — be the first!"
+    
+
+
 
     def check_guess(self):
         try:
@@ -133,11 +136,14 @@ class NumberGuessingGameGUI:
                 "Correct!",
                 f"🎉 You guessed the number in {self.tries} tries!"
             )
+            self.show_confetti()
+
             if self.high_score is None or self.tries < self.high_score:
                 save_high_score(self.tries)
                 self.high_score = self.tries
                 messagebox.showinfo("🏆 New High Score!", "You set a new record!")
-            self.reset_game()
+
+            self.root.after(2000, self.reset_game)
             return
 
         if remaining <= 0:
@@ -161,6 +167,39 @@ class NumberGuessingGameGUI:
             "📘 HOW TO PLAY:\n\n"
             "The computer picks a number between 1 and 100.You have 10 guesses to find it.\n"
         )
+
+
+#adding confetti feature
+    def show_confetti(self):
+        """Show confetti animation when player wins."""
+        confetti_canvas = tk.Canvas(self.root, width=450, height=200, bg="#f5f5f5", highlightthickness=0)
+        confetti_canvas.pack()
+
+        confetti = []
+        colors = ["#FF5733", "#33FF57", "#3357FF", "#FFD700", "#FF33A8", "#00FFFF"]
+
+        # Create confetti pieces
+        for _ in range(50):
+            x = random.randint(0, 450)
+            y = random.randint(0, 200)
+            color = random.choice(colors)
+            size = random.randint(5, 10)
+            shape = confetti_canvas.create_oval(x, y, x + size, y + size, fill=color, outline="")
+            confetti.append((shape, random.randint(-3, 3), random.randint(1, 5)))
+
+        # Animate confetti falling
+        def animate():
+            for i, (shape, dx, dy) in enumerate(confetti):
+                confetti_canvas.move(shape, dx, dy)
+                pos = confetti_canvas.coords(shape)
+                if pos[1] > 200:
+                    confetti_canvas.move(shape, 0, -200)
+            self.root.after(50, animate)
+
+        animate()
+
+        # Remove confetti after 2 seconds
+        self.root.after(2000, confetti_canvas.destroy)
 
 if __name__ == "__main__":
     root = tk.Tk()
