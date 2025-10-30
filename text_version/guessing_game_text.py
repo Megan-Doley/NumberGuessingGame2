@@ -1,5 +1,23 @@
 import random
 import sys
+import os
+
+HIGHSCORE_FILE = "text_version/highscore.txt"
+
+def get_high_score():
+    if os.path.exists(HIGHSCORE_FILE):
+        with open(HIGHSCORE_FILE, "r") as file:
+            try:
+                return int(file.read().strip())
+            except ValueError:
+                return None
+    return None
+
+def save_high_score(score):
+    with open(HIGHSCORE_FILE, "w") as file:
+        file.write(str(score))
+
+
 
 def play_game():
     number = random.randint(1, 100)
@@ -7,9 +25,15 @@ def play_game():
     tries = 0
     max_tries = 10
 
+    high_score = get_high_score()
     print("Welcome to Number Guessing Game!")
     print("I'm thinking of a number between 1 and 100.")
     print(f"you have {max_tries} guesses.")
+
+    if high_score:
+        print(f"Current High Score: {high_score} guesses.")
+    else:
+        print("No high score yet.")
 
     while guess != number and tries < max_tries:
         try:
@@ -26,6 +50,13 @@ def play_game():
 
     if guess != number:
         print(f"you're out of guesses. The number was {number}.")
+    else:
+        if high_score is None or tries < high_score:
+            print("New high score!")
+            save_high_score(tries)
+        else:
+            print(f"your best so far is {high_score} guesses.")
+
 
 def show_help():
     print("How to PLay:")
