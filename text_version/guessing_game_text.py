@@ -1,4 +1,5 @@
 import random
+import sys
 
 def play_game():
     number = random.randint(1, 100)
@@ -26,5 +27,28 @@ def play_game():
     if guess != number:
         print(f"you're out of guesses. The number was {number}.")
 
+def show_help():
+    print("How to PLay:")
+    print("A number is randomly selected between 1-100. You have 10 guesses to find it.")
+
+
+def main_menu():
+    while True:
+        print("Menu:")
+        print("1. Play Game")
+        print("2. Help")
+        print("3. Exit")
+
+        choice = input("Enter your choice (1-3): ")
+        if choice == "1":
+            play_game()
+        elif choice == "2":
+            show_help()
+        elif choice == "3":
+            print("Goodbye!")
+            sys.exit()
+        else:
+            print("Please enter a valid choice (1-3).")
+
 if __name__ == "__main__":
-    play_game()
+    main_menu()
