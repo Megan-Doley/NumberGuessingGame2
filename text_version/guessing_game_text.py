@@ -1,6 +1,19 @@
 import random
 import sys
 import os
+from colorama import Fore, Style, init
+
+init(autoreset=True)
+
+#adding style constants from colorama
+RESET = Style.RESET_ALL
+BOLD = Style.BRIGHT
+RED = Fore.RED
+GREEN = Fore.GREEN
+YELLOW = Fore.YELLOW
+BLUE = Fore.BLUE
+CYAN = Fore.CYAN
+MAGENTA = Fore.MAGENTA
 
 HIGHSCORE_FILE = "text_version/highscore.txt"
 
@@ -26,49 +39,50 @@ def play_game():
     max_tries = 10
 
     high_score = get_high_score()
-    print("Welcome to Number Guessing Game!")
+
+    print(f"{CYAN}{BOLD}Welcome to Number Guessing Game!{RESET}")
     print("I'm thinking of a number between 1 and 100.")
-    print(f"you have {max_tries} guesses.")
+    print(f"you have{YELLOW} {max_tries} {RESET} guesses.")
 
     if high_score:
-        print(f"Current High Score: {high_score} guesses.")
+        print(f"{GREEN}Current High Score: {high_score} guesses.{RESET}")
     else:
-        print("No high score yet.")
+        print(f"{MAGENTA}No high score yet.{RESET}")
 
     while guess != number and tries < max_tries:
         try:
-            guess = int(input("Enter your guess: "))
+            guess = int(input(f"{BLUE}Enter your guess: {RESET} "))
             tries += 1
             if guess < number:
-                print("Too low!")
+                print(f"{YELLOW}Too low!{RESET}")
             elif guess > number:
-                print("Too high!")
+                print(f"{RED}Too high!{RESET}")
             else:
-                print(f"Correct! You guessed it in {tries} tries.")
+                print(f"{GREEN}Correct! You guessed it in {tries} tries.{RESET}")
         except ValueError:
             print("Please enter a valid number.")
 
     if guess != number:
-        print(f"you're out of guesses. The number was {number}.")
+        print(f"{RED}you're out of guesses. The number was {number}.{RESET}")
     else:
         if high_score is None or tries < high_score:
-            print("New high score!")
+            print(f"{GREEN}{BOLD}New high score!{RESET}")
             save_high_score(tries)
         else:
-            print(f"your best so far is {high_score} guesses.")
+            print(f"{CYAN}your best so far is {high_score} guesses.{RESET}")
 
 
 def show_help():
-    print("How to PLay:")
+    print(f"{YELLOW}{BOLD}How to PLay:{RESET}")
     print("A number is randomly selected between 1-100. You have 10 guesses to find it.")
 
 
 def main_menu():
     while True:
         print("Menu:")
-        print("1. Play Game")
-        print("2. Help")
-        print("3. Exit")
+        print("1. 🎮 Play Game")
+        print("2. 💡Help")
+        print("3. 🚪Exit")
 
         choice = input("Enter your choice (1-3): ")
         if choice == "1":
