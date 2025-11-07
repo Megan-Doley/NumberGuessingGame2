@@ -1,3 +1,5 @@
+#I acknowledge the use of ChatGPT (GPT-5, OpenAI) to assist in creating this code.
+
 import random
 import sys
 import os
