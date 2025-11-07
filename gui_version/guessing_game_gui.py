@@ -7,7 +7,7 @@ import os
 
 HIGHSCORE_FILE = "gui_version/highscore.txt"
 
-# Load high score
+
 def get_high_score():
     if os.path.exists(HIGHSCORE_FILE):
         with open(HIGHSCORE_FILE, "r") as file:
@@ -17,7 +17,7 @@ def get_high_score():
                 return None
     return None
 
-# Save high score
+
 def save_high_score(score):
     with open(HIGHSCORE_FILE, "w") as file:
         file.write(str(score))
@@ -26,14 +26,14 @@ def save_high_score(score):
 class NumberGuessingGameGUI:
     def __init__(self, root):
         self.root = root
-        self.root.title("🎯 Number Guessing Game - GUI Version")
+        self.root.title("🎯 Number Guessing Game  - GUI Version")
         self.root.geometry("450x500")
         self.root.config(bg="#f683db")
 
         # Game variables
         self.number = random.randint(1, 100)
         self.tries = 0
-        self.max_tries = 10  # default difficulty
+        self.max_tries = 10  # Default difficulty
         self.high_score = get_high_score()
         self.difficulty = "Normal"
 
@@ -49,38 +49,76 @@ class NumberGuessingGameGUI:
         game_menu.add_separator()
         game_menu.add_command(label="🚪 Exit", command=self.root.quit)
 
-        # Difficulty Menu
+        # ✅ Difficulty Menu (Easy & Hard only)
         difficulty_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Difficulty", menu=difficulty_menu)
-        difficulty_menu.add_command(label="Easy (15 guesses)", command=lambda: self.set_difficulty(15, "Easy"))
-        difficulty_menu.add_command(label="Hard (5 guesses)", command=lambda: self.set_difficulty(5, "Hard"))
+        difficulty_menu.add_command(label="Easy (15 guesses)", command=lambda: self.set_difficulty(15))
+        difficulty_menu.add_command(label="Hard (5 guesses)", command=lambda: self.set_difficulty(5))
 
-        # === GUI Labels and Buttons ===
-        self.title_label = tk.Label(root, text="🎯 Number Guessing Game 🎯", font=("Arial", 18, "bold"), bg="#f683db", fg="#007acc")
+        self.title_label = tk.Label(
+            root,
+            text="🎯 Number Guessing Game 🎯",
+            font=("Arial", 18, "bold"),
+            bg="#f683db",
+            fg="#007acc"
+        )
         self.title_label.pack(pady=15)
 
-        self.info_label = tk.Label(root, text="I'm thinking of a number between 1 and 100.\nYou have 10 guesses.", font=("Arial", 12), bg="#f683db")
+        self.info_label = tk.Label(
+            root,
+            text="I'm thinking of a number between 1 and 100.\nYou have 10 guesses.",
+            font=("Arial", 12),
+            bg="#f683db"
+        )
         self.info_label.pack(pady=10)
 
-        self.difficulty_label = tk.Label(root, text=f"Difficulty: {self.difficulty}", font=("Arial", 11, "italic"), bg="#f683db", fg="#4b0082")
-        self.difficulty_label.pack(pady=5)
-
-        self.high_score_label = tk.Label(root, text=self.get_high_score_text(), font=("Arial", 11, "italic"), bg="#f683db", fg="#228B22")
+        self.high_score_label = tk.Label(
+            root,
+            text=self.get_high_score_text(),
+            font=("Arial", 11, "italic"),
+            bg="#f683db",
+            fg="#228B22"
+        )
         self.high_score_label.pack(pady=5)
 
         self.entry = tk.Entry(root, font=("Arial", 14), justify="center")
         self.entry.pack(pady=10)
 
-        self.guess_button = tk.Button(root, text="Guess", font=("Arial", 12, "bold"), bg="#4CAF50", fg="white", width=12, command=self.check_guess)
+        self.guess_button = tk.Button(
+            root,
+            text="Guess",
+            font=("Arial", 12, "bold"),
+            bg="#4CAF50",
+            fg="white",
+            width=12,
+            command=self.check_guess
+        )
         self.guess_button.pack(pady=5)
 
-        self.feedback_label = tk.Label(root, text="", font=("Arial", 12), bg="#f683db")
+        self.feedback_label = tk.Label(
+            root,
+            text="",
+            font=("Arial", 12),
+            bg="#f683db"
+        )
         self.feedback_label.pack(pady=10)
 
-        self.reset_button = tk.Button(root, text="Reset Game", font=("Arial", 10, "bold"), bg="#e67e22", fg="white", command=self.reset_game)
+        self.reset_button = tk.Button(
+            root,
+            text="Reset Game",
+            font=("Arial", 10, "bold"),
+            bg="#e67e22",
+            fg="white",
+            command=self.reset_game
+        )
         self.reset_button.pack(pady=5)
 
-        self.remaining_label = tk.Label(root, text=f"Remaining tries: {self.max_tries}", font=("Arial", 11), bg="#f5f5f5")
+        self.remaining_label = tk.Label(
+            root,
+            text=f"Remaining tries: {self.max_tries}",
+            font=("Arial", 11),
+            bg="#f5f5f5"
+        )
         self.remaining_label.pack(pady=5)
 
     def get_high_score_text(self):
@@ -88,12 +126,11 @@ class NumberGuessingGameGUI:
             return f"🏆 Current High Score: {self.high_score} guesses"
         return "No high score yet — be the first!"
 
-    def set_difficulty(self, tries, name):
+    def set_difficulty(self, tries):
+        """Change difficulty and restart game values."""
         self.max_tries = tries
-        self.difficulty = name
-        self.difficulty_label.config(text=f"Difficulty: {self.difficulty}")
-        messagebox.showinfo("Difficulty Changed", f"Difficulty set to {name}. You now have {tries} guesses.")
         self.reset_game()
+        messagebox.showinfo("Difficulty Set", f"Difficulty changed! You now have {tries} guesses.")
 
     def check_guess(self):
         try:
@@ -114,6 +151,7 @@ class NumberGuessingGameGUI:
             if self.high_score is None or self.tries < self.high_score:
                 save_high_score(self.tries)
                 self.high_score = self.tries
+                messagebox.showinfo("🏆 New High Score!", "You set a new record!")
             self.reset_game()
             return
 
@@ -134,10 +172,9 @@ class NumberGuessingGameGUI:
         self.high_score_label.config(text=self.get_high_score_text())
 
     def show_help(self):
-        messagebox.showinfo("📘 HOW TO PLAY", "Guess a number between 1 and 100.\nYou have a limited number of attempts based on difficulty.")
+        messagebox.showinfo("📘 HOW TO PLAY", "Guess a number between 1 and 100.\nYou have limited attempts to guess it!")
 
 if __name__ == "__main__":
     root = tk.Tk()
     app = NumberGuessingGameGUI(root)
     root.mainloop()
-
