@@ -1,5 +1,5 @@
 # I acknowledge the use of ChatGPT (GPT-5, OpenAI) to assist in creating this code.
-
+#imports
 import tkinter as tk
 from tkinter import messagebox
 import random
@@ -30,18 +30,21 @@ class NumberGuessingGameGUI:
         self.root.geometry("450x500")
         self.root.config(bg="#f683db")
 
+        # Game variables
         self.number = random.randint(1, 100)
         self.tries = 0
         self.max_tries = 10  # Default difficulty
         self.high_score = get_high_score()
+        self.difficulty = "Normal"
 
-        # === MENU ===
+        # === MENU BAR ===
         menu_bar = tk.Menu(self.root)
         self.root.config(menu=menu_bar)
 
+        # Game Menu
         game_menu = tk.Menu(menu_bar, tearoff=0)
         menu_bar.add_cascade(label="Menu", menu=game_menu)
-        game_menu.add_command(label="🎮 Play", command=self.reset_game)
+        game_menu.add_command(label="🎮 Play Again", command=self.reset_game)
         game_menu.add_command(label="💡 Help", command=self.show_help)
         game_menu.add_separator()
         game_menu.add_command(label="🚪 Exit", command=self.root.quit)
