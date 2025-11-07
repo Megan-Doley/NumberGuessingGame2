@@ -25,7 +25,7 @@ class NumberGuessingGameGUI:
         self.root = root
         self.root.title("🎯 Number Guessing Game  - GUI Version")
         self.root.geometry("450x500")
-        self.root.config(bg="#f5f5f5")
+        self.root.config(bg="#f683db")
 
         self.number = random.randint(1, 100)
         self.tries = 0
@@ -47,7 +47,7 @@ class NumberGuessingGameGUI:
             root,
             text="🎯 Number Guessing Game 🎯",
             font=("Arial", 18, "bold"),
-            bg="#f5f5f5",
+            bg="#f683db",
             fg="#007acc"
         )
         self.title_label.pack(pady=15)
@@ -56,7 +56,7 @@ class NumberGuessingGameGUI:
             root,
             text="I'm thinking of a number between 1 and 100.\nYou have 10 guesses.",
             font=("Arial", 12),
-            bg="#f5f5f5"
+            bg="#f683db"
         )
         self.info_label.pack(pady=10)
 
@@ -64,7 +64,7 @@ class NumberGuessingGameGUI:
             root,
             text=self.get_high_score_text(),
             font=("Arial", 11, "italic"),
-            bg="#f5f5f5",
+            bg="#f683db",
             fg="#228B22"
         )
         self.high_score_label.pack(pady=5)
@@ -87,7 +87,7 @@ class NumberGuessingGameGUI:
             root,
             text="",
             font=("Arial", 12),
-            bg="#f5f5f5"
+            bg="#f683db"
         )
         self.feedback_label.pack(pady=10)
 
