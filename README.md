@@ -1,5 +1,5 @@
 Foundations of Programming and Software Engineering Assignment (CSC-44102)
-Author: Megan Doley, y5s53@students.keele.ac.uk
+y5s53@students.keele.ac.uk
 
 Number Guessing game:
 A text-based number guessing game, that will be developed into a GUI interface, with additional features added.
